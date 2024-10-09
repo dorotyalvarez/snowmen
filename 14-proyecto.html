@@ -1,0 +1,56 @@
+<canvas style="background-color: blue;" id="myCanvas" width="600" height="600"></canvas>
+
+<script src="snowman.js"></script>
+<script>
+    const ctx = myCanvas.getContext("2d");
+    const minX = 170;
+    const rangeX = 60;
+    let p = 0;
+    const bow = new Image();
+    bow.src = "bow.png";
+    const song = new Audio("song.mp3")
+
+    myCanvas.addEventListener("click", function() {
+        song.play();
+    });
+
+    document.addEventListener("keydown", function(info) {
+        if (info.key === " ") {
+            song.play();
+        }
+    });
+
+
+    myCanvas.addEventListener("mousemove", function(info) {
+        p = info.offsetX / myCanvas.width;
+    });
+
+
+    animate();
+
+    function animate() {
+
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+        drawSnowman(200, 640, 160, 0.7);
+        // hacer dinamico los ojos
+        const x = minX + rangeX * p;
+
+        ctx.beginPath();
+        ctx.arc(x - 25, 170, 15, 0, Math.PI * 2)
+        ctx.arc(x + 25, 170, 15, 0, Math.PI * 2)
+        ctx.fill();
+        ctx.drawImage(bow, 150, 225, 100, 60);
+        ctx.font = "30px Comic Sans MS";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle"
+        ctx.fillText("PASEMOS", 200, 320);
+        ctx.fillText("NAVIDAD", 200, 360);
+        ctx.fillText("JUNTOS", 200, 400);
+
+
+
+
+
+        requestAnimationFrame(animate);
+    }
+</script>

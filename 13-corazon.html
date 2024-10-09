@@ -1,0 +1,34 @@
+<canvas id="myCanvas" width="400" height="400" style="background-color: pink;"></canvas>
+
+<script>
+    const ctx = myCanvas.getContext("2d");
+
+    const heardImage = new Image();
+    heardImage.src = "heard.png";
+    const maxY = 100;
+    const rangeY = 100;
+    let P = 0;
+    ctx.drawImage(heardImage, 100, 70, 200, 200);
+    animate();
+
+    function animate() {
+        P = P + 0.02;
+        if (P > 1) {
+            P = 0
+
+        }
+        const y = maxY - Math.abs(Math.sin(P * Math.PI)) * rangeY;
+        ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+        ctx.drawImage(heardImage, 100, y, 200, 200);
+
+
+        ctx.font = "30px Arial";
+        ctx.textBaseline = "middle"
+        ctx.textAlign = "center"
+        ctx.fillStyle = "red";
+        ctx.fillText("TE AMO LESS ♥♥♥♥ ", 200, 300)
+        requestAnimationFrame(animate);
+
+    }
+</script>

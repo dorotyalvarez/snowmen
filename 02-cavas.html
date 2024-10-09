@@ -1,0 +1,12 @@
+<canvas id="myCanvas" style="background-color: blue;" width="400 " height="400"></canvas>
+<script>
+    const el = document.getElementById("myCanvas");
+    const ctx = el.getContext('2d');
+    ctx.beginPath();
+    ctx.rect(100, 100, 200, 200)
+    ctx.lineWidth = 60;
+    ctx.strokeStyle = "yellow";
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.stroke();
+</script>

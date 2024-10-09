@@ -1,0 +1,156 @@
+<canvas style="background-color: blue;" id="myCanvas" width="600" height="600"></canvas>
+<script src="nieve.js"></script>
+<script src="tierra.js"></script>
+<!-- Tu archivo con la animación de copos de nieve -->
+<script>
+    const ctx = myCanvas.getContext("2d");
+    const minX = 300;
+    const rangeX = 15;
+    let p = -1;
+    const bow = new Image();
+    const heard = new Image();
+    heard.src = "heard.png";
+    bow.src = "bow.png";
+    const song = new Audio("song.mp3");
+
+    // Eventos de usuario
+    myCanvas.addEventListener("click", function() {
+        song.play();
+    });
+
+    document.addEventListener("keydown", function(info) {
+        if (info.key === " ") {
+            song.play();
+        }
+    });
+
+    myCanvas.addEventListener("mousemove", function(info) {
+        p = info.offsetX / myCanvas.width;
+    });
+
+    // Animación
+    animate();
+
+    function animate() {
+        drawBackground(); // Dibuja el fondo
+        drawSnowman(300, 250, 50, 0.7); // Dibuja el muñeco de nieve
+
+        // Hacer dinámico los ojos
+        const x = minX + rangeX * p;
+
+        // Ojos centrados en la cabeza del muñeco
+        ctx.fillStyle = "black"; // Color de los ojos
+        ctx.beginPath();
+        ctx.arc(x - 10, 107, 5, 0, Math.PI * 2); // Ojo izquierdo
+        ctx.arc(x + 10, 107, 5, 0, Math.PI * 2); // Ojo derecho
+        ctx.fill();
+
+        // Dibujar el árbol
+        drawTree(480, 250);
+
+        // Otras cosas como el lazo y el texto
+        ctx.drawImage(bow, 275, 120, 50, 30);
+        ctx.font = "10px Comic Sans MS";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("PASEMOS", 300, 160);
+        ctx.fillText("NAVIDAD", 300, 170);
+        ctx.fillText("JUNTOS", 300, 180);
+        ctx.fillText("FOREVER", 300, 230);
+        ctx.drawImage(heard, 275, 235, 50, 30);
+        ctx.fillText("TOGETHER", 300, 275);
+
+        requestAnimationFrame(animate);
+    }
+
+    // Función para dibujar el fondo y las nubes
+    function drawBackground() {
+        // Cielo
+        ctx.fillStyle = "#87CEEB"; // Color del cielo
+        ctx.fillRect(0, 0, myCanvas.width, myCanvas.height / 2);
+
+        // dibujar casa
+        drawRealisticHouse();
+        // dibujar nieve
+        startSnowAnimation();
+        // tierra
+        drawGround();
+
+        // Dibujar nubes
+        drawCloud(50, 40);
+        drawCloud(250, 30);
+        drawCloud(500, 80);
+    }
+
+    // Función para dibujar una nube
+    function drawCloud(x, y) {
+        ctx.fillStyle = "white"; // Color de la nube
+        ctx.beginPath();
+        ctx.arc(x, y, 20, 0, Math.PI * 2);
+        ctx.arc(x + 30, y, 30, 0, Math.PI * 2);
+        ctx.arc(x + 60, y, 20, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+
+    // Función para dibujar un árbol
+    function drawTree(x, y) {
+        // Tronco
+        ctx.fillStyle = "#8B4513"; // Color marrón
+        ctx.fillRect(x - 10, y, 20, 50);
+
+        // Hojas del árbol
+        ctx.fillStyle = "green";
+        ctx.beginPath();
+        ctx.moveTo(x, y - 180); // Ajustar la posición de las hojas más arriba
+        ctx.lineTo(x - 60, y); // Hacer las hojas más grandes
+        ctx.lineTo(x + 60, y);
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    // Función para dibujar el muñeco de nieve
+    function drawSnowman(x1, y1, r1, scalaFactor) {
+        ctx.beginPath();
+        ctx.arc(x1, y1, r1, 0, Math.PI * 2);
+        ctx.fillStyle = "white";
+        ctx.fill();
+
+        ctx.beginPath();
+        const r2 = r1 * scalaFactor,
+            x2 = x1,
+            y2 = y1 - r1 - r2;
+        ctx.arc(x2, y2, r2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        const r3 = r2 * scalaFactor,
+            x3 = x2,
+            y3 = y2 - r2 - r3;
+        ctx.arc(x3, y3, r3, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Dibujar sombrero
+        drawHat(x3, y3, r3);
+    }
+
+    // Función para dibujar el sombrero
+    function drawHat(headX, headY, headRad) {
+        ctx.fillStyle = "black"; // Color del sombrero
+        ctx.beginPath();
+        const w4 = headRad * 2,
+            h4 = headRad / 2,
+            x4 = headX - w4 / 2,
+            y4 = headY - headRad;
+        ctx.rect(x4, y4, w4, h4);
+        ctx.fill();
+
+        ctx.beginPath();
+        const w5 = w4 * 0.8,
+            h5 = headRad,
+            x5 = headX - w5 / 2,
+            y5 = y4 - h5;
+        ctx.rect(x5, y5, w5, h5);
+        ctx.fill();
+    }
+</script>

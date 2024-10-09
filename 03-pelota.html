@@ -1,0 +1,11 @@
+<canvas id="myCanvas" style="background-color: aqua;" height="400" width="400"></canvas>
+
+</canvas>
+<script>
+    const el = document.getElementById("myCanvas");
+    const ctx = el.getContext("2d");
+    ctx.beginPath()
+    ctx.arc(200, 200, 20, 0, Math.PI * 2);
+    ctx.fillStyle = "blue";
+    ctx.fill();
+</script>

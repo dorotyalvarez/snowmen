@@ -1,0 +1,35 @@
+<canvas id="myCanvas" height="400" width="400"></canvas>
+<script>
+    // Obtiene el elemento canvas y su contexto 2D
+    const el = document.getElementById("myCanvas");
+    const ctx = el.getContext("2d");
+
+    const thickness = 10; // Grosor de los bordes de los rectángulos
+    let x = 0, // Posición x inicial
+        y = 0, // Posición y inicial
+        w = 200, // Ancho inicial
+        h = 400; // Alto inicial
+
+    let i = 1; // Contador para el número de capas
+
+    // Bucle que dibuja 10 rectángulos
+    while (i <= 10) {
+        ctx.beginPath(); // Inicia un nuevo camino para dibujar
+        ctx.rect(x, y, w, h); // Dibuja un rectángulo con la posición y dimensiones actuales
+
+        // Alterna el color de relleno entre azul y blanco
+        if (i % 2 == 1) {
+            ctx.fillStyle = "blue"; // Si i es impar, usa azul
+        } else {
+            ctx.fillStyle = "white"; // Si i es par, usa blanco
+        }
+
+        ctx.fill(); // Rellena el rectángulo con el color actual
+        // Actualiza las posiciones y dimensiones para el siguiente rectángulo
+        x = x + thickness; // Mueve la posición x hacia la derecha
+        y = y + thickness; // Mueve la posición y hacia abajo
+        w = w - thickness - thickness; //Reduce el ancho
+        h = h - thickness - thickness; // Reduce la altura
+        i = i + 1; // Incrementa el contador
+    }
+</script>
